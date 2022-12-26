@@ -1,0 +1,110 @@
+#include<iostream>
+using namespace std;
+
+int itc_len_num(long long a) //Number 2
+{
+    int g;
+    g = 0;
+    if (a == 0)
+        return 1;
+    if (a < 0)
+        a = a * (-1);
+        while (a>0)
+        {
+            g = g + 1;
+            a = a / 10;
+        }
+    return g;
+}
+
+long long perevorot(long long i){
+     long long g, nch;
+     nch = 0;
+     if (i < 0)
+        i = i * (-1);
+      while (i > 0)
+        {
+            g = i % 10;
+            nch = nch * 10 + g;
+            i = i / 10;
+        }
+     return nch;
+ }
+
+long long itc_bin_num(long long a) //Number 13
+{
+    long long nch, d, i, g;
+    nch = 0;
+    i = 1;
+    if (a < 0)
+    a = a * (-1);
+        while (a > 0)
+        {
+            d = a % 2;
+            nch = nch * 10 + d;
+            a = a / 2;
+            if (nch == 0)
+                i = i * 10;
+        }
+    g = perevorot(nch) * i;
+    return g;
+}
+
+int main ()
+{
+    long a, b, nch, l, ad, i, nstr, obc;
+    cin >> a >> b;
+    nch = 0;
+    l = 1;
+    obc = 0;
+    ad = itc_bin_num(a);
+    if (a >= 0)
+    {
+        for (i = 0; i < b; i++)
+        {                                                  //положительное
+             nch = nch * 10 + ad % 10;
+             ad = ad / 10;
+             if (nch == 0)
+                l = l * 10;
+        }
+        nstr = perevorot(nch)*l;
+        for (i = 0; i < b - itc_len_num(nstr); i++)
+            cout << "0";
+        cout <<  nstr;
+    }
+    else
+    {                                                    //начало создания прямого кода
+        b--;
+        for (i = 0; i < b; i++)
+        {
+             nch = nch * 10 + ad % 10;
+             ad = ad / 10;
+             if (nch == 0)
+                l = l * 10;
+        }
+        nstr = perevorot(nch)*l;
+        cout << "pryamoy code: " << 1;
+        for (i = 0; i < b - itc_len_num(nstr); i++)
+            cout << "0";
+        cout <<  nstr << endl << "reverse code: 1";
+        l = 0;                                          //конец создания прямого кода, начало обратного
+        for (i = 0; i < itc_len_num(nstr); i++)
+        {
+            if (nstr % 10 == 0)
+                obc = obc * 10 + 1;
+            else
+            {
+                obc = obc * 10;
+                if (obc == 0)
+                    l = l * 10;
+            }
+            nstr = nstr / 10;
+        }
+        obc = perevorot(obc*l);
+        for (i = 0; i < b - itc_len_num(obc); i++)
+            cout << "1";
+        cout <<  obc;
+
+    }
+    return 0;
+}
